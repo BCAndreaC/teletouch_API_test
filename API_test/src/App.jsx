@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Login } from "./components/login/login.jsx";
-//import { ProductsAPI } from "./services/products.jsx";
+import  {ProductsAPI}  from "./components/products/products.jsx";
 
 
 export function App() {
@@ -8,7 +8,7 @@ export function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        {/* <Route path="/products" element={<ProductsAPI />} /> */}
+         <Route path="/products" element={<ProductsAPI />} /> 
       </Routes>
     </BrowserRouter>
   );
