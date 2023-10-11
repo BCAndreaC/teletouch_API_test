@@ -8,17 +8,15 @@ export function loginAPI(options, setError) {
           "Error al iniciar sesión. Por favor, verifica tus credenciales."
         );
       }
-      console.log(response);
       return response.json();
       
     })
     .then((data) => {
       token = data.token;
-      console.log(token);
       localStorage.setItem("token", token);
       return { token };
     })
-    .then(console.log)
+    // .then(console.log)
     .catch((error) => {
       console.error(error);
       setError("Error al iniciar sesión. Por favor, verifica tus credenciales");

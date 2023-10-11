@@ -1,6 +1,10 @@
-import { InputUserName, InputPassword, ButtonSumbit } from "./loginComponents.jsx";
+import {
+  InputUserName,
+  InputPassword,
+  ButtonSumbit,
+} from "./loginComponents.jsx";
 import { useState } from "react";
-import { loginAPI }  from "../../services/login.jsx";
+import { loginAPI } from "../../services/login.jsx";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -12,39 +16,35 @@ function Login() {
   const data = {
     username: username,
     password: password,
-    };
+  };
 
-    const options = {
+  const options = {
     method: "POST",
     headers: {
-    "Content-Type": "application/json",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-    };
-
+  };
 
   const handleSumbit = async (event) => {
     event.preventDefault();
     try {
       const response = await loginAPI(options, setError);
-
-      if (response) {
-        console.log(response + "AKIIIIIII");
-        // La respuesta contiene un token, lo que indica que el inicio de sesión fue exitoso
+      if (response.token) {
         navigate("/products");
       }
     } catch (error) {
-      // Manejar errores de la solicitud de inicio de sesión, por ejemplo, si la API no responde
       console.error("Error al iniciar sesión:", error);
       setError(
-        "Error al iniciar sesión. Por favor, inténtalo de nuevo más tarde."
+        "Error al iniciar sesión. Por favor, verifica tus credenciales."
       );
     }
   };
 
   return (
     <section className="flex bg-gunMetal min-h-screen min-w-fit">
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 text-xl">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8 text-xl">
+        <h1 className="text-center text-5xl">Teletouch</h1>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSumbit}>
             <InputUserName

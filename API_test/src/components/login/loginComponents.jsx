@@ -57,7 +57,7 @@ function ButtonSumbit() {
     <div>
       <button
         type="submit"
-        className="flex w-full justify-center rounded-md bg-celadon px-3 py-1.5 text-md font-semibold leading-6 text-gunMetal shadow-sm hover:bg-teal-600  sm:leading-7 mt-12"
+        className="flex w-full justify-center rounded-md bg-celadon px-3 py-2 text-md font-semibold leading-6 text-gunMetal shadow-sm hover:bg-teal-600  sm:leading-7 mt-12"
       >
         Ingresa
       </button>

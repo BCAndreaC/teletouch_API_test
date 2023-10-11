@@ -1,11 +1,13 @@
 import { fetchProducts } from "../../services/products";
 import { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { ListProducts } from "./productsComponents";
+import { ListProducts } from "./productsComponents";
+import { patchProduct } from "../../services/products";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function ProductsAPI() {
   const [products, setProducts] = useState([]);
-  // const navigate = useNavigate();
+  const notifyEdit = () => toast.success("Producto editado");
 
   function handleProducts() {
     return fetchProducts()
@@ -14,8 +16,16 @@ export function ProductsAPI() {
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
-        // Puedes manejar el error o redirigir aquí
-        // navigate("/login");
+      });
+  }
+  function handleEditProduct(id, title, price) {
+    return patchProduct(id, title, price)
+      .then(() => {
+        handleProducts();
+        notifyEdit();
+      })
+      .catch((error) => {
+        console.error("Error handling edit data", error);
       });
   }
 
@@ -23,39 +33,21 @@ export function ProductsAPI() {
     handleProducts();
   }, []);
 
-  function ListProducts() {
-    return (
-      <div className="bg-white">
-        <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-          <h2 className="sr-only">Products</h2>
-  
-          <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-                {products.map((product) => (
-                  <a key={product.id} href={product.href} className="group">
-                    <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
-                      <img
-                        src={product.thumbnail}
-                        alt={product.images}
-                        className="h-full w-full object-cover object-center group-hover:opacity-75"
-                      />
-                    </div>
-                    <h3 className="mt-4 text-sm text-gray-700">
-                      {product.title}
-                    </h3>
-                    <p className="mt-1 text-lg font-medium text-gray-900">
-                      {product.price}
-                    </p>
-                  </a>
-                ))}
-              </div>
-          </div>
-        </div>
-    );
-  }
-
   return (
     <div>
-      <ListProducts products={products} />
+      <ListProducts
+        products={products}
+        handleEditProduct={handleEditProduct}
+        handleProducts={handleProducts}
+      />
+      <ToastContainer
+        theme="dark"
+        toastClassName={() =>
+          "flex bg-blackInput p-4 rounded justify-between border-2 border-kitchenText"
+        }
+        bodyClassName={() => "flex flex-row text-kitchenText items-center"}
+        hideProgressBar
+      />
     </div>
   );
 }
